@@ -7,7 +7,9 @@
     'description': '''Ce module permet l'export du fichier EDI pour la télédéclaration des Entreprises Marocaines,
                     A partir des lignes de Facture déjà existantes sur Odoo Comptabilite. '''
 
-    'category': 'Comptabilite',
+    "version": "12.0.1.0.0",
+    "development_status": "Stable",
+    "category": "Accounting",
 
     'price': 19.99,
     'currency': 'EUR',
