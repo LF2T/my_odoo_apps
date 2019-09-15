@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+  <data>
+
+    <record id="generate_xml_init_form_view" model="ir.ui.view">
+  		<field name="name">xml.tva.form</field>
+  		<field name="model">tva.declaration.creation</field>
+  		<field name="arch" type="xml">
+  			<form string="Declaration Releve de Deduction">
+          <field name="file_name" invisible="1"/>
+  				<group col="4">
+  					<field name="name"/>
+  					<field name="end_date"/>
+  					<field name="identifiant_fiscal"/>
+  					<field name="annee"/>
+  					<field name="regime"/>
+  					<field name="type"/>
+  				</group>
+
+  				<group attrs="{'invisible': [('regime', '=', '2')]}" col="4">
+  					<field name="periode_month" attrs="{'required': [('regime', '!=', '2')]}"/>
+  				</group>
+
+  				<group attrs="{'invisible': [('regime', '!=', '2')]}" col="4">
+  					<field name="periode_trimestre" attrs="{'required': [('regime', '=', '2')]}"/>
+  				</group>
+
+          <group col="4">
+  					<field name="declared"/>
+  				</group>
+
+          <button name="filtre_xml" string="Filtrer" type="object" class="oe_highlight"/>
+
+          <field name="tampon_invoices">
+              <tree string="Releve de Deduction" editable="bottom">
+                  <field name="num_ordre" string="Num D'Ordre"/>
+                  <field name="invoice_id" string="Num de Facture"/>
+                  <field name="date_invoice" string="Date de la Facture"/>
+                  <field name="name" string="Designation des Biens et Services"/>
+                  <field name="partner_id" string="Nom du Fournisseur"/>
+                  <field name="identifiant_fiscal" string="Identifiant Fiscal Fournisseur"/>
+                  <field name="ice_company" string="ICE"/>
+                  <field name="price_subtotal" string="Montant HT"/>
+                  <field name="x_taux" string="Taux"/>
+                  <field name="tva_amount" string="Montant TVA"/>
+                  <field name="ttc_amount" string="Montant TTC"/>
+                  <field name="mode_paiement" string="Mode de Paiement"/>
+                  <field name="date_paiement" string="Date de Paiement"/>
+                  <field name="declared" readonly="1"/>
+              </tree>
+          </field>
+
+          <field name="related_invoices" invisible="1"/>
+
+          <group attrs="{'invisible': [('txt_file', '=', False)]}" col="4">
+              <field name="txt_file" filename="file_name"/>
+  				</group>
+
+    			<footer>
+      			<button name="generate_xml" string="Generer EDI" type="object" class="oe_highlight oe_right"/>
+    			</footer>
+  			</form>
+  		</field>
+  	</record>
+
+    <record id="generate_xml_init_tree_view" model="ir.ui.view">
+  		<field name="name">xml.tva.tree</field>
+  		<field name="model">tva.declaration.creation</field>
+  		<field name="arch" type="xml">
+  			<tree string="Declaration Releve de Deduction">
+          <field name="name"/>
+          <field name="end_date"/>
+          <field name="identifiant_fiscal"/>
+          <field name="annee"/>
+          <field name="regime"/>
+          <field name="type"/>
+        </tree>
+  		</field>
+  	</record>
+
+    <record id="action_tva_xml_form" model="ir.actions.act_window">
+			<field name="name">Générer XML</field>
+      <field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="res_model">tva.declaration.creation</field>
+		</record>
+
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="date_due" position="after">
+                    <field name="mode_paiement"/>
+                    <field name="date_paiement"/>
+                </field>
+            </field>
+        </record>
+
+		<menuitem string="Declarations TVA" name="Declarations TVA" id="declarations_tva" action="action_tva_xml_form" sequence="2" parent="menu_tva_declare"/>
+  </data>
+</openerp>

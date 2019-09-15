@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+    
+<templates>
+
+<div class="oe_web_example_message">Press to upload!/h3> 
+
+<p class="oe_web_example_file">
+
+<input type="file" id="fileUpload" name="file" />
+
+<button>entire file</button>
+
+</p>
+
+<p class="oe_web_example_filesa" id="dvCSV">
+
+<textarea name="dvCSVs" rows="4" cols="50"></textarea>
+
+</p>
+
+</div>
+
+</templates>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+	<record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.inherit.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="website" position="after">
+                        <field name="identifiant_fiscal"/>
+                        <field name="ice_company"/>
+                </field>
+            </field>
+    </record>
+
+    <record id="declare_tva_tree" model="ir.ui.view">
+            <field name="name">tva.account.invoice.line.tree</field>
+            <field name="model">account.invoice.line</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<tree string="Releve de Deduction" editable="bottom">
+                    <field name="id" string="Num D'Ordre"/>
+                    <field name="invoice_id" string="Num de Facture"/>
+                    <field name="date_invoice" string="Date de la Facture"/>
+                    <field name="name" string="Designation des Biens et Services"/>
+                    <field name="partner_id" string="Nom du Fournisseur"/>
+                    <field name="identifiant_fiscal" string="Identifiant Fiscal Fournisseur"/>
+                    <field name="ice_company" string="ICE"/>
+          					<field name="price_subtotal" string="Montant HT"/>
+          					<field name="x_taux" string="Taux"/>
+          					<field name="tva_amount" string="Montant TVA"/>
+          					<field name="ttc_amount" string="Montant TTC"/>
+          					<field name="mode_paiement" string="Mode de Paiement" readonly='0'/>
+          					<field name="date_paiement" string="Date de Paiement" readonly='0'/>
+                    <field name="to_declare" string="A declarer"/>
+                    <field name="declared" string="Deja Déclaré" readonly="1"/>
+                </tree>
+            </field>
+    </record>
+
+    <!-- <record model="ir.ui.view" id="invoice_line_filter">
+            <field name="name">Filtre par date de paiement</field>
+            <field name="model">account.invoice.line</field>
+            <field name="arch" type="xml">
+                <search string="Lignes de Facture Filter">
+                    <field name="date_paiement"/>
+                    <group expand="0" string="Group By">
+                        <filter string="date de paiement" domain="[]" context="{'group_by':'date_paiement'}"/>
+                    </group>
+                </search>
+            </field>
+        </record> -->
+
+
+	<record id="action_invoice_line" model="ir.actions.act_window">
+            <field name="name">Lignes de Facture</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice.line</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="declare_tva_tree"/>
+            <field name="domain">['|',('invoice_id.type','=','in_invoice'),('invoice_id.type','=','in_refund')]</field>
+            <!--field name="search_view_id" ref="invoice_line_filter"/>  -->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Pas de lignes de Factures à afficher pour le moment.
+              </p>
+            </field>
+        </record>
+
+        <menuitem string="Teledeclaration" name="Teledeclaration" id="menu_teledeclare" sequence="50" />
+        <menuitem string="Teledeclaration TVA" name="Teledeclaration TVA" id="menu_tva_declare" sequence="1" parent="menu_teledeclare"/>
+		    <menuitem string="Lignes de Facture" name="Lignes de Facture" id="menu_invoice_lines" action="action_invoice_line" sequence="1" parent="menu_tva_declare"/>
+
+    </data>
+</odoo>
