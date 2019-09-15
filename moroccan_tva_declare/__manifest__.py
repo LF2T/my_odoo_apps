@@ -4,8 +4,8 @@
 {
     'name': 'Teledeclaration TVA',
 
-    'description': '''Ce module permet l'export du fichier EDI pour la télédéclaration des Entreprises Marocaines,
-                    A partir des lignes de Facture déjà existantes sur Odoo Comptabilite. '''
+    'description': "Ce module permet l'export du fichier EDI pour la télédéclaration des Entreprises Marocaines,"
+                    "A partir des lignes de Facture déjà existantes sur Odoo Comptabilite. ",
 
     "version": "12.0.1.0.0",
     "development_status": "Stable",
