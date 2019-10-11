@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record id="survey_user_input_form" model="ir.ui.view">
+            <field name="name">survey_user_input_form_answered</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_form"/>
+            <field name="arch" type="xml">
+              <field name="page_id" position="before">
+                  <field name="project_id"/>
+                  <field name="user_id"/>
+              </field>
+              <field name="quizz_mark" position="replace">
+                  <field name="value"/>
+              </field>
+            </field>
+        </record>
+    </odoo>
